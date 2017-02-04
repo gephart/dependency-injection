@@ -3,7 +3,7 @@
   "type": "library",
   "description": "Gephart DependencyInjection Component",
   "keywords": [],
-  "homepage": "http://gephart.katuscak.cz/dependecy-injection",
+  "homepage": "https://github.com/gephart/dependency-injection",
   "license": "MIT",
   "authors": [
     {
