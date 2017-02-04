@@ -1,0 +1,28 @@
+{
+  "name": "gephart/dependency-injection",
+  "type": "library",
+  "description": "Gephart DependencyInjection Component",
+  "keywords": [],
+  "homepage": "http://gephart.katuscak.cz/dependecy-injection",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Michal Katuščák",
+      "email": "michal@katuscak.cz"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "autoload": {
+    "psr-4": { "Gephart\\DependencyInjection\\": "src/" },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "master"
+    }
+  }
+}
