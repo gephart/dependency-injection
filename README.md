@@ -11,7 +11,7 @@ Instalation
 ---
 
 ```
-composer install gephart/dependency-injection
+composer require gephart/dependency-injection
 ```
 
 Using
