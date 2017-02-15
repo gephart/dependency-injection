@@ -10,13 +10,14 @@ Dependencies
 Instalation
 ---
 
-```
+```bash
 composer require gephart/dependency-injection
 ```
 
 Using
 ---
-```
+
+```php
 class A
 {
     public function hello(string $world): string
