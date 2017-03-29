@@ -73,7 +73,7 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
 
         try {
             $this->container->get(C::class);
-        } catch (\Gephart\DependencyInjection\ContainerException $e) {
+        } catch (\Exception $e) {
             $exception_name_result = true;
         }
 
@@ -87,19 +87,6 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
         try {
             $this->container->get("NonExistsClass");
         } catch (\Psr\Container\NotFoundExceptionInterface $e) {
-            $exception_name_result = true;
-        }
-
-        $this->assertTrue($exception_name_result);
-    }
-
-    public function testPsrException()
-    {
-        $exception_name_result = false;
-
-        try {
-            $this->container->get(C::class);
-        } catch (\Psr\Container\ContainerExceptionInterface $e) {
             $exception_name_result = true;
         }
 
