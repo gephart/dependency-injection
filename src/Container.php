@@ -23,8 +23,8 @@ final class Container implements ContainerInterface
                 $this->objects[$class_name] = new $class_name(...$dependencies);
             } catch (NotFoundException $e) {
                 throw new ContainerException("Container could not initialize '$class_name' because dependencies not founds.");
-            } catch (\Exception $e) {
-                throw new ContainerException("Container could not initialize '$class_name' because: ." . $e->getMessage());
+            } catch (\Exception $exception) {
+                throw $exception;
             }
         }
 
