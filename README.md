@@ -5,7 +5,8 @@ Gephart Dependecy Injection
 
 Dependencies
 ---
- - PHP >= 7.0
+ - PHP >= 7.1
+ - psr/container == 1.0.0
 
 Instalation
 ---

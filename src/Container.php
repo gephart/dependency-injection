@@ -3,10 +3,29 @@
 namespace Gephart\DependencyInjection;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Dependency injection container
+ *
+ * @package Gephart\DependencyInjection
+ * @author Michal Katuščák <michal@katuscak.cz>
+ * @since 0.2
+ */
 final class Container implements ContainerInterface
 {
+    /**
+     * @var array
+     */
     private $objects = [];
 
+    /**
+     * Get instance of object by class name.
+     *
+     * @param string $class_name
+     * @return $this|mixed
+     * @throws ContainerException
+     * @throws NotFoundException
+     * @throws \Exception
+     */
     public function get($class_name)
     {
         if ($class_name === self::class) {
@@ -31,6 +50,12 @@ final class Container implements ContainerInterface
         return $this->objects[$class_name];
     }
 
+    /**
+     * Does the container contain an instance of object?
+     *
+     * @param string $class_name
+     * @return bool
+     */
     public function has($class_name): bool
     {
         if (isset($this->objects[$class_name]) || class_exists($class_name)) {
@@ -39,6 +64,15 @@ final class Container implements ContainerInterface
         return false;
     }
 
+    /**
+     * @since 0.4 Now throw ContainerException
+     * @since 0.2
+     *
+     * @param string $class_name
+     * @param string $method_name
+     * @return array
+     * @throws \Exception
+     */
     private function getDependencies(string $class_name, string $method_name = "__construct"): array
     {
         $dependencies = [];
@@ -54,7 +88,7 @@ final class Container implements ContainerInterface
             if ($parameter->getClass()) {
                 $dependencies[] = $this->get($parameter->getClass()->name);
             } else {
-                throw new \Exception("All parameters of $class_name::$method_name must be a class.");
+                throw new ContainerException("All parameters of $class_name::$method_name must be a class.");
             }
         }
 
