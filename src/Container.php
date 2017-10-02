@@ -1,6 +1,7 @@
 <?php
 
 namespace Gephart\DependencyInjection;
+
 use Psr\Container\ContainerInterface;
 
 /**
@@ -41,7 +42,7 @@ final class Container implements ContainerInterface
                 $dependencies = $this->getDependencies($class_name);
                 $this->objects[$class_name] = new $class_name(...$dependencies);
             } catch (NotFoundException $e) {
-                throw new ContainerException("Container could not initialize '$class_name' because dependencies not founds.");
+                throw new ContainerException("Container could not initialize '$class_name', dependencies not founds.");
             } catch (\Exception $exception) {
                 throw $exception;
             }
