@@ -1,8 +1,8 @@
 <?php
 
 namespace Gephart\DependencyInjection;
+
 use Psr\Container\ContainerInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * Dependency injection container
@@ -42,7 +42,9 @@ final class Container implements ContainerInterface
                 $dependencies = $this->getDependencies($class_name);
                 $this->objects[$class_name] = new $class_name(...$dependencies);
             } catch (NotFoundException $e) {
-                throw new ContainerException("Container could not initialize '$class_name' because dependencies not founds.");
+                throw new ContainerException(
+                    "Container could not initialize '$class_name' because dependencies not founds."
+                );
             } catch (\Exception $exception) {
                 throw $exception;
             }
@@ -112,7 +114,9 @@ final class Container implements ContainerInterface
             try {
                 $class = $parameter->getClass();
             } catch (\Exception $exception) {
-                throw new ContainerException("Class not found in $class_name::$method_name. " . $exception->getMessage());
+                throw new ContainerException(
+                    "Class not found in $class_name::$method_name. " . $exception->getMessage()
+                );
             }
 
             if ($class) {
