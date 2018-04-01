@@ -21,47 +21,47 @@ final class Container implements ContainerInterface
     /**
      * Get instance of object by class name.
      *
-     * @param string $class_name
+     * @param string $className
      * @return $this|mixed
      * @throws ContainerException
      * @throws NotFoundException
      * @throws \Exception
      */
-    public function get($class_name)
+    public function get($className)
     {
-        if ($class_name === self::class) {
+        if ($className === self::class) {
             return $this;
         }
 
-        if (!array_key_exists($class_name, $this->objects)) {
-            if (!class_exists($class_name)) {
+        if (!array_key_exists($className, $this->objects)) {
+            if (!class_exists($className)) {
                 throw new NotFoundException("Class not found.");
             }
 
             try {
-                $dependencies = $this->getDependencies($class_name);
-                $this->objects[$class_name] = new $class_name(...$dependencies);
+                $dependencies = $this->getDependencies($className);
+                $this->objects[$className] = new $className(...$dependencies);
             } catch (NotFoundException $e) {
                 throw new ContainerException(
-                    "Container could not initialize '$class_name' because dependencies not founds."
+                    "Container could not initialize '$className' because dependencies not founds."
                 );
             } catch (\Exception $exception) {
                 throw $exception;
             }
         }
 
-        return $this->objects[$class_name];
+        return $this->objects[$className];
     }
 
     /**
      * Does the container contain an instance of object?
      *
-     * @param string $class_name
+     * @param string $className
      * @return bool
      */
-    public function has($class_name): bool
+    public function has($className): bool
     {
-        if (isset($this->objects[$class_name]) || class_exists($class_name)) {
+        if (isset($this->objects[$className]) || class_exists($className)) {
             return true;
         }
         return false;
@@ -70,21 +70,21 @@ final class Container implements ContainerInterface
     /**
      * @since 0.5
      *
-     * @param $object
-     * @param string|null $class_name
+     * @param object $object
+     * @param string|null $className
      * @return Container
      */
-    public function register($object, string $class_name = null): Container
+    public function register($object, ?string $className): Container
     {
-        if (!$class_name) {
-            $class_name = get_class($object);
+        if (!$className) {
+            $className = get_class($object);
         }
 
-        if (!is_object($object) || !$object instanceof $class_name) {
-            throw new \InvalidArgumentException("Parameter \$object must be instance of object " . $class_name);
+        if (!is_object($object) || !$object instanceof $className) {
+            throw new \InvalidArgumentException("Parameter \$object must be instance of object " . $className);
         }
 
-        $this->objects[$class_name] = $object;
+        $this->objects[$className] = $object;
 
         return $this;
     }
@@ -94,36 +94,36 @@ final class Container implements ContainerInterface
      * @since 0.4 Now throw ContainerException
      * @since 0.2
      *
-     * @param string $class_name
-     * @param string $method_name
+     * @param string $className
+     * @param string $methodName
      * @return array
      * @throws ContainerException
      */
-    private function getDependencies(string $class_name, string $method_name = "__construct"): array
+    private function getDependencies(string $className, string $methodName = "__construct"): array
     {
         $dependencies = [];
 
-        $reflection_class = new \ReflectionClass($class_name);
+        $reflectionClass = new \ReflectionClass($className);
 
-        if (!$reflection_class->hasMethod($method_name)) {
+        if (!$reflectionClass->hasMethod($methodName)) {
             return $dependencies;
         }
 
-        $parameters = $reflection_class->getMethod($method_name)->getParameters();
+        $parameters = $reflectionClass->getMethod($methodName)->getParameters();
         foreach ($parameters as $parameter) {
             try {
                 $class = $parameter->getClass();
             } catch (\Exception $exception) {
                 throw new ContainerException(
-                    "Class not found in $class_name::$method_name. " . $exception->getMessage()
+                    "Class not found in $className::$methodName. " . $exception->getMessage()
                 );
             }
 
-            if ($class) {
-                $dependencies[] = $this->get($class->name);
-            } else {
-                throw new ContainerException("All parameters of $class_name::$method_name must be a class.");
+            if (!$class) {
+                throw new ContainerException("All parameters of $className::$methodName must be a class.");
             }
+
+            $dependencies[] = $this->get($class->name);
         }
 
         return $dependencies;
