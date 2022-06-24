@@ -1,7 +1,7 @@
 Gephart Dependecy Injection
 ===
 
-[![Build Status](https://travis-ci.org/gephart/dependency-injection.svg?branch=master)](https://travis-ci.org/gephart/dependency-injection)
+[![php](https://github.com/gephart/dependency-injection/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/gephart/dependency-injection/actions)
 
 Dependencies
 ---
