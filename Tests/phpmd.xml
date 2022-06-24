@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<ruleset name="Some ruleset"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="minimum" description="Minimum length for a variable, property or parameter name" value="2"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/naming.xml/LongClassName" />
+    <rule ref="rulesets/naming.xml/ShortClassName" />
+    <rule ref="rulesets/naming.xml/LongVariable" />
+    <rule ref="rulesets/naming.xml/ShortMethodName" />
+    <rule ref="rulesets/naming.xml/ConstructorWithNameAsEnclosingClass" />
+    <rule ref="rulesets/naming.xml/BooleanGetMethodName" />
+
+</ruleset>

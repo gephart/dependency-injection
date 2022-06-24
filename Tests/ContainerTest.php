@@ -34,7 +34,7 @@ class ContainerTest extends \PHPUnit\Framework\TestCase
 {
     private $container;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->container = new \Gephart\DependencyInjection\Container();
     }
