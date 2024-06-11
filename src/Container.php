@@ -115,7 +115,7 @@ final class Container implements ContainerInterface
         $parameters = $reflectionClass->getMethod($methodName)->getParameters();
         foreach ($parameters as $parameter) {
             try {
-                $class = $parameter->getClass();
+                $class = $parameter->getType();
             } catch (\Exception $exception) {
                 throw new ContainerException(
                     "Class not found in $id::$methodName. " . $exception->getMessage()
@@ -126,7 +126,7 @@ final class Container implements ContainerInterface
                 throw new ContainerException("All parameters of $id::$methodName must be a class.");
             }
 
-            $dependencies[] = $this->get($class->name);
+            $dependencies[] = $this->get((string) $class);
         }
 
         return $dependencies;
